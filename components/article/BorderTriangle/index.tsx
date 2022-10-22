@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { RangeInput } from '../../control/RangeInput'
 import { BorderTriangleDemo } from './Demo'
 
 export const BorderTriangleArticle = () => {
@@ -9,8 +10,7 @@ export const BorderTriangleArticle = () => {
       <h1>CSS Borderで三角形をつくる</h1>
       <label>
         width & height
-        <input
-          type='range'
+        <RangeInput
           min={0}
           max={200}
           value={size}
