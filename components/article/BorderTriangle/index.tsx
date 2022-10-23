@@ -21,15 +21,14 @@ export const BorderTriangleArticle = () => {
         <li>widthとheightを0にし、borderだけを表示</li>
         <li>欲しい向きの三角形以外のborderをtransparentに</li>
       </ol>
-      <label>
-        width & height
-        <RangeInput
-          min={0}
-          max={200}
-          value={size}
-          onChange={e => setSize(Number(e.target.value))}
-        />
-      </label>
+      <RangeInput
+        min={0}
+        max={200}
+        value={size}
+        onChange={e => setSize(Number(e.target.value))}
+        label='width & height'
+        unit='px'
+      />
       <HorizontalStack>
         <BorderTriangleDemo size={size} />
         <CodeHighlight lang='css'>

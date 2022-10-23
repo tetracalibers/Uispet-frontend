@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { CodeHighlight } from '../../contents/CodeHighlight'
 import { nanoid } from 'nanoid'
+import { HorizontalStack } from '../../layout/HorizontalStack'
 
 const css_ResetButton = css`
   background-color: transparent;
@@ -50,6 +51,7 @@ const dripShadowRecord = dripShadows.reduce<Record<string, string>>(
 const OptionCard = styled.div`
   display: flex;
   align-items: center;
+  background-color: #4d608b;
 `
 
 const ShowCase = styled.div`
@@ -58,6 +60,13 @@ const ShowCase = styled.div`
   justify-content: center;
   align-items: center;
   padding: 3rem;
+  width: fit-content;
+  margin: auto;
+`
+
+const OverflowScroll = styled.div`
+  width: 100%;
+  overflow: auto;
 `
 
 export const DripButtonArticle = () => {
@@ -79,7 +88,7 @@ export const DripButtonArticle = () => {
 
   return (
     <>
-      <div>
+      <HorizontalStack>
         {Object.entries(dripShadowRecord).map(([id, sh]) => (
           <OptionCard key={sh}>
             <input
@@ -88,13 +97,10 @@ export const DripButtonArticle = () => {
               checked={checkedShadow[id] !== undefined}
               onChange={e => onCheck(id, sh)}
             />
-            <CodeHighlight lang='css' isInline>
-              {`box-shadow: ${sh};`}
-            </CodeHighlight>
             <BaseButtonSample style={{ boxShadow: sh }} />
           </OptionCard>
         ))}
-      </div>
+      </HorizontalStack>
       <ShowCase>
         <BaseButtonSample
           style={{ boxShadow: Object.values(checkedShadow).join(', ') }}
