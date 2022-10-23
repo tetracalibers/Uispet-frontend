@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CodeHighlight } from '../../contents/CodeHighlight'
 import { RangeInput } from '../../control/RangeInput'
 import { BorderTriangleDemo } from './Demo'
 
@@ -18,20 +19,18 @@ export const BorderTriangleArticle = () => {
         />
       </label>
       <BorderTriangleDemo size={size} />
-      <pre>
-        <code>
-          {`
-            width: ${size}px;
-            height: ${size}px;
-            border-top: 100px solid #f6bffb;
-            border-bottom: 100px solid #8093e5;
-            border-left: 100px solid #f8898e;
-            border-right: 100px solid #d1eaaa;
-            background-color: #bdc3c7;
-            box-sizing: content-box;
-          `}
-        </code>
-      </pre>
+      <CodeHighlight lang='css'>
+        {`
+          width: ${size}px;
+          height: ${size}px;
+          border-top: 100px solid #f6bffb;
+          border-bottom: 100px solid #8093e5;
+          border-left: 100px solid #f8898e;
+          border-right: 100px solid #d1eaaa;
+          background-color: #bdc3c7;
+          box-sizing: content-box;
+        `}
+      </CodeHighlight>
     </>
   )
 }

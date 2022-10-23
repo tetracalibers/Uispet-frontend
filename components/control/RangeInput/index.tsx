@@ -26,16 +26,19 @@ const Slider = styled.div`
 
 const SliderThumb = styled.div<{ $now: string; $max: number; $min: number }>`
   width: calc(100% - var(--thumb-width));
-  height: fit-content;
+  padding: 0 calc(var(--thumb-width) * 0.5);
+  height: 1em;
   position: relative;
   color: var(--color);
 
-  &::after {
-    content: '${({ $now }) => $now}';
+  & span {
+    width: ${({ $max }) => $max.toString().length}ch;
+    transform: translateX(calc(var(--thumb-width) * -0.5));
     position: absolute;
     left: ${({ $now, $max, $min }) =>
       css`calc((${$now} - ${$min}) / (${$max} - ${$min}) * 100%)`};
-    transform: translateX(-50%);
+    text-align: center;
+    transform: translateX(calc(var(--thumb-width) * 0.5 - 50%));
   }
 `
 
@@ -102,12 +105,9 @@ export const RangeInput = ({ value, min, max, onChange, ...props }: Props) => {
   return (
     <Layout>
       <Slider>
-        <SliderThumb
-          aria-hidden={true}
-          $now={`${value}`}
-          $max={max}
-          $min={min}
-        ></SliderThumb>
+        <SliderThumb aria-hidden={true} $now={`${value}`} $max={max} $min={min}>
+          <span>{value}</span>
+        </SliderThumb>
         <SliderTrack
           {...props}
           type='range'
