@@ -11,6 +11,16 @@ export const BorderTriangleArticle = () => {
   return (
     <ArticleContainer>
       <h1>CSS Borderで三角形をつくる</h1>
+      <ol>
+        <li>
+          <CodeHighlight lang='css' isInline>
+            box-sizing: content-box;
+          </CodeHighlight>
+          で、border-widthをwidthとheightに含めない
+        </li>
+        <li>widthとheightを0にし、borderだけを表示</li>
+        <li>欲しい向きの三角形以外のborderをtransparentに</li>
+      </ol>
       <label>
         width & height
         <RangeInput
