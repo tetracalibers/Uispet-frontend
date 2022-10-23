@@ -44,11 +44,11 @@ const SliderThumb = styled.div<{ $now: string; $max: number; $min: number }>`
 
 const css_Track = css`
   width: calc(100% - var(--thumb-width));
-  height: 1px;
+  height: 5px;
   cursor: pointer;
   box-shadow: none;
-  background: var(--color);
-  border-radius: 0px;
+  background: #a6a9b6;
+  border-radius: 5px;
 `
 
 const css_Thumb = css`
