@@ -11,6 +11,11 @@ const Home: NextPage = () => {
             <a>CSSで三角形をつくる</a>
           </Link>
         </li>
+        <li>
+          <Link href='/articles/drip_button'>
+            <a>重ね着shadowによる雫風ボタン</a>
+          </Link>
+        </li>
       </ul>
     </>
   )
