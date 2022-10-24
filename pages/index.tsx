@@ -16,6 +16,11 @@ const Home: NextPage = () => {
             <a>重ね着shadowによる雫風ボタン</a>
           </Link>
         </li>
+        <li>
+          <Link href='/articles/color_space'>
+            <a>色相環とか</a>
+          </Link>
+        </li>
       </ul>
     </>
   )
