@@ -213,7 +213,7 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
             />
           </div>
           <div>
-            <Label htmlFor='cp-input-a'>A</Label>
+            <Label htmlFor='cp-input-a'>A(%)</Label>
             <RgbaInput
               id='cp-input-a'
               placeholder='A'

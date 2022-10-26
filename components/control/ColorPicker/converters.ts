@@ -5,7 +5,7 @@ export const rgbaToHex = (color: ColorRGBA) => {
   const hexR = r.toString(16).padStart(2, '0')
   const hexG = g.toString(16).padStart(2, '0')
   const hexB = b.toString(16).padStart(2, '0')
-  const hexA = a === 1 ? '' : a.toString(16).padStart(2, '0')
+  const hexA = a === 100 ? '' : a.toString(16).padStart(2, '0')
   return '#' + hexR + hexG + hexB + hexA
 }
 
@@ -17,7 +17,7 @@ export const hexToRgba = (color: string): ColorRGBA => {
     const r = Number('0x' + color[1] + color[1])
     const g = Number('0x' + color[2] + color[2])
     const b = Number('0x' + color[3] + color[3])
-    const a = 1
+    const a = 100
     return { r, g, b, a }
   }
   // 6 digits or 8 digits
@@ -25,7 +25,7 @@ export const hexToRgba = (color: string): ColorRGBA => {
     const r = Number('0x' + color[1] + color[2])
     const g = Number('0x' + color[3] + color[4])
     const b = Number('0x' + color[5] + color[6])
-    const a = color.length === 9 ? Number('0x' + color[7] + color[8]) : 1
+    const a = color.length === 9 ? Number('0x' + color[7] + color[8]) : 100
     return { r, g, b, a }
   }
   // default
