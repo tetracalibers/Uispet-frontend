@@ -1,11 +1,12 @@
-import { MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { Color } from './Color'
+import { Color } from './types/Color'
+import { IndicatorDragEvent } from './types/Event'
 
 interface SaturationDragAreaProps {
   color: Color
   coords: Array<number>
-  onChange: MouseEventHandler
+  onChange: (e: IndicatorDragEvent) => void
 }
 
 const DragArea = styled.div`
@@ -34,18 +35,18 @@ export const SaturationDragArea = ({
 }: SaturationDragAreaProps) => {
   const [inDrag, setInDrag] = useState(false)
 
-  const onDragStart: MouseEventHandler = e => {
+  const onDragStart = (e: IndicatorDragEvent) => {
     e.preventDefault()
     setInDrag(true)
     onChange(e)
   }
 
-  const onDrag: MouseEventHandler = e => {
+  const onDrag = (e: IndicatorDragEvent) => {
     e.preventDefault()
     inDrag && onChange(e)
   }
 
-  const onDragEnd: MouseEventHandler = e => {
+  const onDragEnd = (e: IndicatorDragEvent) => {
     e.preventDefault()
     setInDrag(false)
   }
@@ -59,6 +60,9 @@ export const SaturationDragArea = ({
       onMouseDown={onDragStart}
       onMouseMove={onDrag}
       onMouseUp={onDragEnd}
+      onTouchStart={onDragStart}
+      onTouchMove={onDrag}
+      onTouchEnd={onDragEnd}
     >
       <Indicator
         style={{

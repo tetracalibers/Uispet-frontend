@@ -1,4 +1,4 @@
-import { Color } from './Color'
+import { Color } from './types/Color'
 
 export const getSaturationCoordinates = (color: Color): [number, number] => {
   const { s, v } = color.hsva

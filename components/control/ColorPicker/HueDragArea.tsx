@@ -1,11 +1,12 @@
-import { MouseEventHandler, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import { Color } from './Color'
+import { Color } from './types/Color'
+import { IndicatorDragEvent } from './types/Event'
 
 interface HueDragAreaProps {
   color: Color
   coords: number
-  onChange: MouseEventHandler
+  onChange: (e: IndicatorDragEvent) => void
 }
 
 const DragArea = styled.div`
@@ -38,18 +39,18 @@ const Indicator = styled.div`
 export const HueDragArea = ({ color, coords, onChange }: HueDragAreaProps) => {
   const [inDrag, setInDrag] = useState(false)
 
-  const onDragStart: MouseEventHandler = e => {
+  const onDragStart = (e: IndicatorDragEvent) => {
     e.preventDefault()
     setInDrag(true)
     onChange(e)
   }
 
-  const onDrag: MouseEventHandler = e => {
+  const onDrag = (e: IndicatorDragEvent) => {
     e.preventDefault()
     inDrag && onChange(e)
   }
 
-  const onDragEnd: MouseEventHandler = e => {
+  const onDragEnd = (e: IndicatorDragEvent) => {
     e.preventDefault()
     setInDrag(false)
   }
@@ -60,6 +61,9 @@ export const HueDragArea = ({ color, coords, onChange }: HueDragAreaProps) => {
       onMouseDown={onDragStart}
       onMouseMove={onDrag}
       onMouseUp={onDragEnd}
+      onTouchStart={onDragStart}
+      onTouchMove={onDrag}
+      onTouchEnd={onDragEnd}
     >
       <Indicator
         style={{
