@@ -37,7 +37,7 @@ const InputContainer = styled.div`
 
 const InputGroup = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
   grid-gap: 8px;
   align-items: center;
 `
@@ -54,6 +54,7 @@ const ColorPreview = styled.div`
 const Input = styled.input`
   padding: 4px 6px;
   display: block;
+  text-align: right;
 `
 
 const Label = styled.label`
@@ -62,11 +63,11 @@ const Label = styled.label`
 `
 
 const HexInput = styled(Input)`
-  width: 60px;
+  width: 6em;
 `
 
 const RgbaInput = styled(Input)`
-  width: 30px;
+  width: 3em;
 `
 
 export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
