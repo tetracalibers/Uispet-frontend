@@ -1,5 +1,5 @@
-import { Color } from './types/Color'
-import { IndicatorDragEvent } from './types/Event'
+import { Color } from '../types/Color'
+import { IndicatorDragEvent } from '../types/Event'
 import { TouchEvent, MouseEvent } from 'react'
 
 export const getSaturationCoordinates = (color: Color): [number, number] => {

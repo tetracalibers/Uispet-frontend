@@ -1,7 +1,8 @@
-import { ColorHSVA, ColorRGBA } from './types/Color'
+import { ColorHSVA, ColorRGBA } from '../types/Color'
 
 export const rgbaToHex = (color: ColorRGBA) => {
   const { r, g, b, a } = color
+  console.log(r, g, b, a)
   const hexR = r.toString(16).padStart(2, '0')
   const hexG = g.toString(16).padStart(2, '0')
   const hexB = b.toString(16).padStart(2, '0')

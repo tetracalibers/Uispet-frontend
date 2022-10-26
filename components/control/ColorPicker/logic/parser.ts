@@ -1,4 +1,4 @@
-import { ColorRGBA, Color } from './types/Color'
+import { ColorRGBA, Color } from '../types/Color'
 import { hexToRgba, rgbaToHsva, rgbaToHex } from './converters'
 
 export const getRgba = (color: string): ColorRGBA => {
@@ -6,7 +6,7 @@ export const getRgba = (color: string): ColorRGBA => {
   const r = Number(matches?.[1] ?? 0)
   const g = Number(matches?.[2] ?? 0)
   const b = Number(matches?.[3] ?? 0)
-  const a = Number(matches?.[4] ?? 1)
+  const a = Number(matches?.[4] ?? 100)
   return {
     r,
     g,
@@ -30,7 +30,7 @@ export const parseColor = (color: string): Color => {
   }
   return {
     hex: '#000000',
-    rgba: { r: 0, g: 0, b: 0, a: 1 },
-    hsva: { h: 0, s: 0, v: 0, a: 1 },
+    rgba: { r: 0, g: 0, b: 0, a: 100 },
+    hsva: { h: 0, s: 0, v: 0, a: 100 },
   }
 }

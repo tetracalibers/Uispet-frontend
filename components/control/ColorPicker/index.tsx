@@ -1,13 +1,13 @@
 import { useMemo, useCallback, ChangeEventHandler, ChangeEvent } from 'react'
 import styled from 'styled-components'
-import { hsvaToRgba, rgbaToHex } from './converters'
-import { parseColor } from './parser'
+import { hsvaToRgba, rgbaToHex } from './logic/converters'
+import { parseColor } from './logic/parser'
 import {
   getSaturationCoordinates,
   getHueCoordinates,
   clamp,
   getMouseTouchPos,
-} from './coordinates'
+} from './logic/coordinates'
 import { DragSelector } from './DragSelector'
 import { IndicatorDragEvent } from './types/Event'
 
@@ -63,7 +63,7 @@ const Label = styled.label`
 `
 
 const HexInput = styled(Input)`
-  width: 6em;
+  width: 6.5em;
 `
 
 const RgbaInput = styled(Input)`
@@ -106,7 +106,7 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
           onChange(rgbaToHex({ r, g, b: value ?? 0, a }))
           return
         case 'a':
-          onChange(rgbaToHex({ r, g, b, a: value ?? 1 }))
+          onChange(rgbaToHex({ r, g, b, a: value ?? 100 }))
         default:
           return
       }
