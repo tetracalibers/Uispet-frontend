@@ -1,10 +1,4 @@
-import {
-  useMemo,
-  useCallback,
-  MouseEventHandler,
-  ChangeEventHandler,
-  ChangeEvent,
-} from 'react'
+import { useMemo, useCallback, ChangeEventHandler, ChangeEvent } from 'react'
 import styled from 'styled-components'
 import { hsvaToRgba, rgbaToHex } from './converters'
 import { parseColor } from './parser'
@@ -12,8 +6,10 @@ import {
   getSaturationCoordinates,
   getHueCoordinates,
   clamp,
+  getMouseTouchPos,
 } from './coordinates'
 import { DragSelector } from './DragSelector'
+import { IndicatorDragEvent } from './types/Event'
 
 interface ColorPickerProps {
   color: string
@@ -117,12 +113,13 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
     [parsedColor, onChange]
   )
 
-  const handleSaturationChange = useCallback<MouseEventHandler<HTMLElement>>(
-    event => {
+  const handleSaturationChange = useCallback(
+    (event: IndicatorDragEvent) => {
       const { width, height, left, top } =
         event.currentTarget.getBoundingClientRect()
-      const x = clamp(event.clientX - left, 0, width)
-      const y = clamp(event.clientY - top, 0, height)
+      const { clientX, clientY } = getMouseTouchPos(event)
+      const x = clamp(clientX - left, 0, width)
+      const y = clamp(clientY - top, 0, height)
       const s = (x / width) * 100
       const v = 100 - (y / height) * 100
       const rgba = hsvaToRgba({
@@ -136,10 +133,11 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
     [parsedColor, onChange]
   )
 
-  const handleHueChange = useCallback<MouseEventHandler<HTMLElement>>(
-    event => {
+  const handleHueChange = useCallback(
+    (event: IndicatorDragEvent) => {
       const { width, left } = event.currentTarget.getBoundingClientRect()
-      const x = clamp(event.clientX - left, 0, width)
+      const { clientX } = getMouseTouchPos(event)
+      const x = clamp(clientX - left, 0, width)
       const h = Math.round((x / width) * 360)
       const hsva = {
         h,

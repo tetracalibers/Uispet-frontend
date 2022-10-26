@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import styled from 'styled-components'
+import { useDragPreventDefault } from './hooks/useDragPreventDefault'
 import { Color } from './types/Color'
 import { IndicatorDragEvent } from './types/Event'
 
@@ -34,20 +35,20 @@ export const SaturationDragArea = ({
   onChange,
 }: SaturationDragAreaProps) => {
   const [inDrag, setInDrag] = useState(false)
+  const dragAreaRef = useRef<HTMLDivElement>(null)
+
+  useDragPreventDefault(dragAreaRef)
 
   const onDragStart = (e: IndicatorDragEvent) => {
-    e.preventDefault()
     setInDrag(true)
     onChange(e)
   }
 
   const onDrag = (e: IndicatorDragEvent) => {
-    e.preventDefault()
     inDrag && onChange(e)
   }
 
-  const onDragEnd = (e: IndicatorDragEvent) => {
-    e.preventDefault()
+  const onDragEnd = () => {
     setInDrag(false)
   }
 
@@ -56,6 +57,7 @@ export const SaturationDragArea = ({
       style={{
         backgroundColor: `hsl(${color.hsva.h}, 100%, 50%)`,
       }}
+      ref={dragAreaRef}
       onClick={onChange}
       onMouseDown={onDragStart}
       onMouseMove={onDrag}
