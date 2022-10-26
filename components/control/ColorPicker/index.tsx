@@ -1,4 +1,10 @@
-import { useMemo, useCallback } from 'react'
+import {
+  useMemo,
+  useCallback,
+  MouseEventHandler,
+  ChangeEventHandler,
+  ChangeEvent,
+} from 'react'
 import styled from 'styled-components'
 import { hsvaToRgba, rgbaToHex } from './converters'
 import { parseColor } from './parser'
@@ -7,10 +13,10 @@ import {
   getHueCoordinates,
   clamp,
 } from './coordinates'
+import { DragSelector } from './DragSelector'
 
 interface ColorPickerProps {
   color: string
-  colors: Array<string>
   onChange(color: string): void
 }
 
@@ -67,7 +73,7 @@ const RgbaInput = styled(Input)`
   width: 30px;
 `
 
-export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
+export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
   const parsedColor = useMemo(() => parseColor(color), [color])
 
   const satCoords = useMemo(
@@ -77,7 +83,7 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
 
   const hueCoords = useMemo(() => getHueCoordinates(parsedColor), [parsedColor])
 
-  const handleHexChange = useCallback(
+  const handleHexChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     event => {
       var val = event.target.value
       if (val?.slice(0, 1) !== '#') {
@@ -89,7 +95,8 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
   )
 
   const handleRgbaChange = useCallback(
-    (component, value) => {
+    (e: ChangeEvent<HTMLInputElement>, component: 'r' | 'g' | 'b' | 'a') => {
+      const value = Number(e.target.value)
       const { r, g, b, a } = parsedColor.rgba
       switch (component) {
         case 'r':
@@ -110,9 +117,10 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
     [parsedColor, onChange]
   )
 
-  const handleSaturationChange = useCallback(
+  const handleSaturationChange = useCallback<MouseEventHandler<HTMLElement>>(
     event => {
-      const { width, height, left, top } = event.target.getBoundingClientRect()
+      const { width, height, left, top } =
+        event.currentTarget.getBoundingClientRect()
       const x = clamp(event.clientX - left, 0, width)
       const y = clamp(event.clientY - top, 0, height)
       const s = (x / width) * 100
@@ -128,9 +136,9 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
     [parsedColor, onChange]
   )
 
-  const handleHueChange = useCallback(
+  const handleHueChange = useCallback<MouseEventHandler<HTMLElement>>(
     event => {
-      const { width, left } = event.target.getBoundingClientRect()
+      const { width, left } = event.currentTarget.getBoundingClientRect()
       const x = clamp(event.clientX - left, 0, width)
       const h = Math.round((x / width) * 360)
       const hsva = {
@@ -147,6 +155,13 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
 
   return (
     <Container>
+      <DragSelector
+        parsedColor={parsedColor}
+        satCoords={satCoords}
+        hueCoords={hueCoords}
+        onSaturationChange={handleSaturationChange}
+        onHueChange={handleHueChange}
+      />
       <InputContainer>
         <InputGroup>
           <ColorPreview
@@ -171,7 +186,7 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
               id='cp-input-r'
               placeholder='R'
               value={parsedColor.rgba.r}
-              onChange={event => handleRgbaChange('r', event.target.value)}
+              onChange={e => handleRgbaChange(e, 'r')}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -182,7 +197,7 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
               id='cp-input-g'
               placeholder='G'
               value={parsedColor.rgba.g}
-              onChange={event => handleRgbaChange('g', event.target.value)}
+              onChange={e => handleRgbaChange(e, 'g')}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -193,7 +208,7 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
               id='cp-input-b'
               placeholder='B'
               value={parsedColor.rgba.b}
-              onChange={event => handleRgbaChange('b', event.target.value)}
+              onChange={e => handleRgbaChange(e, 'b')}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -204,7 +219,7 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
               id='cp-input-a'
               placeholder='A'
               value={parsedColor.rgba.a}
-              onChange={event => handleRgbaChange('a', event.target.value)}
+              onChange={e => handleRgbaChange(e, 'a')}
               inputMode='numeric'
               pattern='[0-9]*'
             />
