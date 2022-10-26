@@ -146,8 +146,20 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
         v: parsedColor.hsva.v,
         a: parsedColor.hsva.a,
       }
-      const rgb = hsvaToRgba(hsva)
-      onChange(rgbaToHex(rgb))
+      const rgba = hsvaToRgba(hsva)
+      onChange(rgbaToHex(rgba))
+    },
+    [parsedColor, onChange]
+  )
+
+  const handleOpacityChange = useCallback(
+    (event: IndicatorDragEvent) => {
+      const { width, left } = event.currentTarget.getBoundingClientRect()
+      const { clientX } = getMouseTouchPos(event)
+      const x = clamp(clientX - left, 0, width)
+      const a = Math.round((x / width) * 100)
+      const rgba = { ...parsedColor.rgba, a }
+      onChange(rgbaToHex(rgba))
     },
     [parsedColor, onChange]
   )
@@ -160,6 +172,7 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
         hueCoords={hueCoords}
         onSaturationChange={handleSaturationChange}
         onHueChange={handleHueChange}
+        onOpacityChange={handleOpacityChange}
       />
       <InputContainer>
         <InputGroup>

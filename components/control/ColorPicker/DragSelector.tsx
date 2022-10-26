@@ -3,6 +3,7 @@ import { Color } from './types/Color'
 import { HueDragArea } from './HueDragArea'
 import { SaturationDragArea } from './SaturationDragArea'
 import { IndicatorDragEvent } from './types/Event'
+import { OpacityDragArea } from './OpacityDragArea'
 
 interface DragSelectorProps {
   parsedColor: Color
@@ -10,6 +11,7 @@ interface DragSelectorProps {
   hueCoords: number
   onSaturationChange: (e: IndicatorDragEvent) => void
   onHueChange: (e: IndicatorDragEvent) => void
+  onOpacityChange: (e: IndicatorDragEvent) => void
 }
 
 const Root = styled.div`
@@ -26,6 +28,7 @@ export const DragSelector = ({
   hueCoords,
   onSaturationChange,
   onHueChange,
+  onOpacityChange,
 }: DragSelectorProps) => {
   return (
     <Root>
@@ -39,6 +42,7 @@ export const DragSelector = ({
         coords={hueCoords}
         onChange={onHueChange}
       />
+      <OpacityDragArea color={parsedColor} onChange={onOpacityChange} />
     </Root>
   )
 }

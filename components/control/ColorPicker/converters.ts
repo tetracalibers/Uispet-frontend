@@ -29,7 +29,7 @@ export const hexToRgba = (color: string): ColorRGBA => {
     return { r, g, b, a }
   }
   // default
-  return { r: 0, g: 0, b: 0, a: 1 }
+  return { r: 0, g: 0, b: 0, a: 100 }
 }
 
 const calcHue = (
