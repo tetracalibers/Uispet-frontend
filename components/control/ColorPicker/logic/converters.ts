@@ -42,7 +42,7 @@ const calcHue = (
   if (range === 0) return 0
   if (max === g) return 120 + ((b - r) / range) * 60
   if (max === b) return 240 + ((r - g) / range) * 60
-  if (max === r) return ((g - b) / range) * 60 + (g < b ? 360 : 0)
+  if (max === r) return ((g - b) / range) * 60 + (g <= b ? 360 : 0)
   return 0
 }
 
