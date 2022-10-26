@@ -1,12 +1,12 @@
 import { useMemo, useCallback } from 'react'
 import styled from 'styled-components'
-import { rgbaToHex } from 'hex-and-rgba'
+import { hsvaToRgba, rgbaToHex } from './converters'
+import { parseColor } from './parser'
 import {
   getSaturationCoordinates,
   getHueCoordinates,
   clamp,
-  parseColor,
-} from './util'
+} from './coordinates'
 
 interface ColorPickerProps {
   color: string
@@ -87,21 +87,22 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
     },
     [onChange]
   )
+
   const handleRgbaChange = useCallback(
     (component, value) => {
       const { r, g, b, a } = parsedColor.rgba
       switch (component) {
         case 'r':
-          onChange(rgbaToHex(value ?? 0, g, b, a))
+          onChange(rgbaToHex({ r: value ?? 0, g, b, a }))
           return
         case 'g':
-          onChange(rgbaToHex(r, value ?? 0, b, a))
+          onChange(rgbaToHex({ r, g: value ?? 0, b, a }))
           return
         case 'b':
-          onChange(rgbaToHex(r, g, value ?? 0, a))
+          onChange(rgbaToHex({ r, g, b: value ?? 0, a }))
           return
         case 'a':
-          onChange(rgbaToHex(r, g, b, value ?? 1))
+          onChange(rgbaToHex({ r, g, b, a: value ?? 1 }))
         default:
           return
       }
@@ -116,8 +117,13 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
       const y = clamp(event.clientY - top, 0, height)
       const s = (x / width) * 100
       const v = 100 - (y / height) * 100
-      const rgb = hsvToRgb({ h: parsedColor?.hsv.h, s, v })
-      onChange(rgbToHex(rgb))
+      const rgba = hsvaToRgba({
+        h: parsedColor.hsva.h,
+        s,
+        v,
+        a: parsedColor.hsva.a,
+      })
+      onChange(rgbaToHex(rgba))
     },
     [parsedColor, onChange]
   )
@@ -127,9 +133,14 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
       const { width, left } = event.target.getBoundingClientRect()
       const x = clamp(event.clientX - left, 0, width)
       const h = Math.round((x / width) * 360)
-      const hsv = { h, s: parsedColor?.hsv.s, v: parsedColor?.hsv.v }
-      const rgb = hsvToRgb(hsv)
-      onChange(rgbToHex(rgb))
+      const hsva = {
+        h,
+        s: parsedColor.hsva.s,
+        v: parsedColor.hsva.v,
+        a: parsedColor.hsva.a,
+      }
+      const rgb = hsvaToRgba(hsva)
+      onChange(rgbaToHex(rgb))
     },
     [parsedColor, onChange]
   )
@@ -159,8 +170,8 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
             <RgbaInput
               id='cp-input-r'
               placeholder='R'
-              value={parsedColor.rgb.r}
-              onChange={event => handleRgbChange('r', event.target.value)}
+              value={parsedColor.rgba.r}
+              onChange={event => handleRgbaChange('r', event.target.value)}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -170,8 +181,8 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
             <RgbaInput
               id='cp-input-g'
               placeholder='G'
-              value={parsedColor.rgb.g}
-              onChange={event => handleRgbChange('g', event.target.value)}
+              value={parsedColor.rgba.g}
+              onChange={event => handleRgbaChange('g', event.target.value)}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -181,8 +192,8 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
             <RgbaInput
               id='cp-input-b'
               placeholder='B'
-              value={parsedColor.rgb.b}
-              onChange={event => handleRgbChange('b', event.target.value)}
+              value={parsedColor.rgba.b}
+              onChange={event => handleRgbaChange('b', event.target.value)}
               inputMode='numeric'
               pattern='[0-9]*'
             />
@@ -192,8 +203,8 @@ export const ColorPicker = ({ color, colors, onChange }: ColorPickerProps) => {
             <RgbaInput
               id='cp-input-a'
               placeholder='A'
-              value={parsedColor.rgb.a}
-              onChange={event => handleRgbChange('a', event.target.value)}
+              value={parsedColor.rgba.a}
+              onChange={event => handleRgbaChange('a', event.target.value)}
               inputMode='numeric'
               pattern='[0-9]*'
             />

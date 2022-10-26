@@ -9,10 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "hex-and-rgba": "^2.0.0",
     "nanoid": "^4.0.0",
     "next": "12.3.0",
-    "parse-color": "^1.0.0",
     "prismjs": "^1.29.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
