@@ -62,6 +62,7 @@ export const OpacityDragArea = ({ color, onChange }: OpacityDragAreaProps) => {
       onTouchStart={onDragStart}
       onTouchMove={onDrag}
       onTouchEnd={onDragEnd}
+      ref={dragAreaRef}
     >
       <Indicator
         style={{

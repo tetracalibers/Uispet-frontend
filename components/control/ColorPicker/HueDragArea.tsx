@@ -58,6 +58,7 @@ export const HueDragArea = ({ color, coords, onChange }: HueDragAreaProps) => {
 
   return (
     <DragArea
+      ref={dragAreaRef}
       onClick={onChange}
       onMouseDown={onDragStart}
       onMouseMove={onDrag}
