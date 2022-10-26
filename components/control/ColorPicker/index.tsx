@@ -18,9 +18,8 @@ interface ColorPickerProps {
 
 const Container = styled.div`
   padding: 12px;
-  overflow: auto;
+  overflow: visible;
   scrollbar-width: none;
-  -ms-overflow-style: none;
   width: fit-content;
 
   &::-webkit-scrollbar {

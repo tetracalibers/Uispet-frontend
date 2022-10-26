@@ -11,8 +11,11 @@ interface HueDragAreaProps {
 }
 
 const DragArea = styled.div`
+  --height: 25px;
+  --circle-size: calc(var(--height) * 1.25);
+
   width: 100%;
-  height: 12px;
+  height: var(--height);
   background-image: linear-gradient(
     to right,
     #ff0000,
@@ -23,17 +26,20 @@ const DragArea = styled.div`
     #ff00ff,
     #ff0000
   );
-  border-radius: 999px;
+  border-radius: 4px;
   position: relative;
   cursor: crosshair;
 `
 
 const Indicator = styled.div`
-  width: 15px;
-  height: 15px;
+  width: var(--circle-size);
+  height: var(--circle-size);
   border: 2px solid #ffffff;
   border-radius: 50%;
-  transform: translate(-7.5px, -2px);
+  transform: translate(
+    -50%,
+    calc(var(--height) * 0.5 - var(--circle-size) * 0.5)
+  );
   position: absolute;
 `
 
