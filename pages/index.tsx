@@ -18,7 +18,12 @@ const Home: NextPage = () => {
         </li>
         <li>
           <Link href='/articles/color_space'>
-            <a>色相環とか</a>
+            <a>色相環</a>
+          </Link>
+        </li>
+        <li>
+          <Link href='/articles/color_picker_demo'>
+            <a>Color Picker Demo</a>
           </Link>
         </li>
       </ul>
