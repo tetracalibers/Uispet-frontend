@@ -85,8 +85,8 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
 
   const handleHexChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
     event => {
-      var val = event.target.value
-      if (val?.slice(0, 1) !== '#') {
+      let val = event.target.value
+      if (!val.startsWith('#')) {
         val = '#' + val
       }
       onChange(val)
