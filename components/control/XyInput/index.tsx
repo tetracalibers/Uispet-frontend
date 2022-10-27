@@ -13,15 +13,23 @@ interface XyInputProps {
   min: XyCoords
 }
 
+const VerticalStack = styled.div`
+  margin: auto;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`
+
 const DragArea = styled.div`
   width: 150px;
   height: 150px;
-  margin: 1rem;
   background: white;
   border-radius: 4px;
   position: relative;
   cursor: crosshair;
   box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+  margin: 1rem auto;
 
   /** 方眼紙 */
   background-image: linear-gradient(
@@ -60,15 +68,23 @@ const Indicator = styled.div`
   position: absolute;
 `
 
+const LabelLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+`
+
 const Input = styled.input`
   padding: 4px 6px;
   display: block;
   text-align: right;
+  width: 80%;
 `
 
 const Label = styled.label`
   display: block;
-  font-size: 12px;
 `
 
 export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
@@ -127,7 +143,7 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
   })
 
   return (
-    <>
+    <VerticalStack>
       <DragArea ref={dragAreaRef} {...moveHandlers}>
         <Indicator
           style={{
@@ -136,7 +152,7 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
           }}
         />
       </DragArea>
-      <div>
+      <LabelLayout>
         <Label htmlFor='xy-coords-x'>x</Label>
         <Input
           inputMode='numeric'
@@ -144,8 +160,8 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
           onChange={e => onInput(e, 'x')}
           id='xy-coords-x'
         />
-      </div>
-      <div>
+      </LabelLayout>
+      <LabelLayout>
         <Label htmlFor='xy-coords-y'>y</Label>
         <Input
           inputMode='numeric'
@@ -153,7 +169,7 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
           onChange={e => onInput(e, 'y')}
           id='xy-coords-y'
         />
-      </div>
-    </>
+      </LabelLayout>
+    </VerticalStack>
   )
 }
