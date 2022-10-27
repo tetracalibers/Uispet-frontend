@@ -8,8 +8,7 @@ import {
 } from './logic/coordinates'
 import { DragSelector } from './DragSelector'
 import { IndicatorDragEvent } from '../../../types/Event'
-import { clamp } from '../../../utils/math'
-import { getMouseTouchPos } from '../../../utils/multidevice'
+import { getAreaXyCoords } from '../../../utils/coords'
 
 interface ColorPickerProps {
   color: string
@@ -115,19 +114,10 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
 
   const handleSaturationChange = useCallback(
     (event: IndicatorDragEvent) => {
-      const { width, height, left, top } =
-        event.currentTarget.getBoundingClientRect()
-      const { clientX, clientY } = getMouseTouchPos(event)
-      const x = clamp(clientX - left, 0, width)
-      const y = clamp(clientY - top, 0, height)
+      const { x, y, width, height } = getAreaXyCoords(event)
       const s = (x / width) * 100
       const v = 100 - (y / height) * 100
-      const rgba = hsvaToRgba({
-        h: parsedColor.hsva.h,
-        s,
-        v,
-        a: parsedColor.hsva.a,
-      })
+      const rgba = hsvaToRgba({ ...parsedColor.hsva, s, v })
       onChange(rgbaToHex(rgba))
     },
     [parsedColor, onChange]
@@ -135,16 +125,9 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
 
   const handleHueChange = useCallback(
     (event: IndicatorDragEvent) => {
-      const { width, left } = event.currentTarget.getBoundingClientRect()
-      const { clientX } = getMouseTouchPos(event)
-      const x = clamp(clientX - left, 0, width)
+      const { x, width } = getAreaXyCoords(event)
       const h = Math.round((x / width) * 360)
-      const hsva = {
-        h,
-        s: parsedColor.hsva.s,
-        v: parsedColor.hsva.v,
-        a: parsedColor.hsva.a,
-      }
+      const hsva = { ...parsedColor.hsva, h }
       const rgba = hsvaToRgba(hsva)
       onChange(rgbaToHex(rgba))
     },
@@ -153,9 +136,7 @@ export const ColorPicker = ({ color, onChange }: ColorPickerProps) => {
 
   const handleOpacityChange = useCallback(
     (event: IndicatorDragEvent) => {
-      const { width, left } = event.currentTarget.getBoundingClientRect()
-      const { clientX } = getMouseTouchPos(event)
-      const x = clamp(clientX - left, 0, width)
+      const { x, width } = getAreaXyCoords(event)
       const a = Math.round((x / width) * 100)
       const rgba = { ...parsedColor.rgba, a }
       onChange(rgbaToHex(rgba))
