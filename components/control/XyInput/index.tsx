@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
-import { useDragPreventDefault } from '../../../hooks/useDragPreventDefault'
+import { useDragMove } from '../../../hooks/useDragMove'
 import { IndicatorDragEvent } from '../../../types/Event'
 
 interface XyInputProps {
@@ -27,35 +27,11 @@ const Indicator = styled.div`
 `
 
 export const XyInput = ({ coords, onChange }: XyInputProps) => {
-  const [inDrag, setInDrag] = useState(false)
   const dragAreaRef = useRef<HTMLDivElement>(null)
-
-  useDragPreventDefault(dragAreaRef)
-
-  const onDragStart = (e: IndicatorDragEvent) => {
-    setInDrag(true)
-    onChange(e)
-  }
-
-  const onDrag = (e: IndicatorDragEvent) => {
-    inDrag && onChange(e)
-  }
-
-  const onDragEnd = () => {
-    setInDrag(false)
-  }
+  const { moveHandlers } = useDragMove({ ref: dragAreaRef, onChange })
 
   return (
-    <DragArea
-      ref={dragAreaRef}
-      onClick={onChange}
-      onMouseDown={onDragStart}
-      onMouseMove={onDrag}
-      onMouseUp={onDragEnd}
-      onTouchStart={onDragStart}
-      onTouchMove={onDrag}
-      onTouchEnd={onDragEnd}
-    >
+    <DragArea ref={dragAreaRef} {...moveHandlers}>
       <Indicator
         style={{
           left: (coords?.x ?? 0) + '%',

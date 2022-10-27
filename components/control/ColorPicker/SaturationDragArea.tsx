@@ -1,6 +1,6 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import styled from 'styled-components'
-import { useDragPreventDefault } from '../../../hooks/useDragPreventDefault'
+import { useDragMove } from '../../../hooks/useDragMove'
 import { Color } from '../../../types/Color'
 import { IndicatorDragEvent } from '../../../types/Event'
 
@@ -34,23 +34,8 @@ export const SaturationDragArea = ({
   coords,
   onChange,
 }: SaturationDragAreaProps) => {
-  const [inDrag, setInDrag] = useState(false)
   const dragAreaRef = useRef<HTMLDivElement>(null)
-
-  useDragPreventDefault(dragAreaRef)
-
-  const onDragStart = (e: IndicatorDragEvent) => {
-    setInDrag(true)
-    onChange(e)
-  }
-
-  const onDrag = (e: IndicatorDragEvent) => {
-    inDrag && onChange(e)
-  }
-
-  const onDragEnd = () => {
-    setInDrag(false)
-  }
+  const { moveHandlers } = useDragMove({ ref: dragAreaRef, onChange })
 
   return (
     <DragArea
@@ -58,13 +43,7 @@ export const SaturationDragArea = ({
         backgroundColor: `hsl(${color.hsva.h}, 100%, 50%)`,
       }}
       ref={dragAreaRef}
-      onClick={onChange}
-      onMouseDown={onDragStart}
-      onMouseMove={onDrag}
-      onMouseUp={onDragEnd}
-      onTouchStart={onDragStart}
-      onTouchMove={onDrag}
-      onTouchEnd={onDragEnd}
+      {...moveHandlers}
     >
       <Indicator
         style={{
