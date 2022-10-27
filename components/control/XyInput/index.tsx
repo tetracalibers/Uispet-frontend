@@ -25,37 +25,28 @@ const DragArea = styled.div`
   width: 150px;
   height: 150px;
   background: white;
-  border-radius: 4px;
   position: relative;
   cursor: crosshair;
   box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
   margin: 1rem auto;
 
-  /** 方眼紙 */
-  background-image: linear-gradient(
-      0deg,
-      transparent calc(100% - 1px),
-      #f0f0f0 calc(100% - 1px)
-    ),
-    linear-gradient(
-      90deg,
-      transparent calc(100% - 1px),
-      #f0f0f0 calc(100% - 1px)
-    );
-  background-size: 10% 10%;
-  background-repeat: repeat;
-  background-position: center center;
-
-  /** 原点 */
+  /* y軸 */
   &::after {
     content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: black;
-    border-radius: 50%;
+    width: calc(150px / 2);
+    height: 150px;
+    border-right: 1px solid black;
+    display: block;
+    transform: translateY(-50%);
+  }
+
+  /** x軸 */
+  &::before {
+    content: '';
+    height: calc(150px / 2);
+    width: 150px;
+    border-bottom: 1px solid black;
+    display: block;
   }
 `
 
