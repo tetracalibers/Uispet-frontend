@@ -1,11 +1,15 @@
-import { useRef } from 'react'
+import { ChangeEvent, useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useDragMove } from '../../../hooks/useDragMove'
+import { XyCoords } from '../../../types/Coords'
 import { IndicatorDragEvent } from '../../../types/Event'
+import { getAreaXyCoords } from '../../../utils/coords'
 
 interface XyInputProps {
-  coords: { x: number; y: number }
-  onChange: (e: IndicatorDragEvent) => void
+  value: XyCoords
+  onChange: (xy: XyCoords) => void
+  max: XyCoords
+  min: XyCoords
 }
 
 const DragArea = styled.div`
@@ -55,18 +59,90 @@ const Indicator = styled.div`
   position: absolute;
 `
 
-export const XyInput = ({ coords, onChange }: XyInputProps) => {
+const Input = styled.input`
+  padding: 4px 6px;
+  display: block;
+  text-align: right;
+`
+
+const Label = styled.label`
+  display: block;
+  font-size: 12px;
+`
+
+export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
   const dragAreaRef = useRef<HTMLDivElement>(null)
-  const { moveHandlers } = useDragMove({ ref: dragAreaRef, onChange })
+
+  const [coords, setCoords] = useState({ x: 50, y: 50 })
+
+  const onInput = useCallback(
+    (e: ChangeEvent<HTMLInputElement>, target: keyof XyCoords) => {
+      const inputV = Number(e.target.value)
+      switch (target) {
+        case 'x':
+          onChange({ ...value, x: inputV })
+          return
+        case 'y':
+          onChange({ ...value, y: inputV })
+          return
+        default:
+          return
+      }
+    },
+    [onChange, value]
+  )
+
+  const onMoveIndicator = useCallback(
+    (e: IndicatorDragEvent) => {
+      const { x, y, width, height } = getAreaXyCoords(e)
+      const relative = {
+        x: (x / width) * 100,
+        y: (y / height) * 100,
+      }
+      const values = {
+        x: Math.round((max.x - min.x) * (x / width)) - (max.x - min.x) / 2,
+        y:
+          -1 * Math.round((max.y - min.y) * (y / height)) + (max.y - min.y) / 2,
+      }
+      setCoords(relative)
+      onChange(values)
+    },
+    [onChange, max, min]
+  )
+
+  const { moveHandlers } = useDragMove({
+    ref: dragAreaRef,
+    onChange: onMoveIndicator,
+  })
 
   return (
-    <DragArea ref={dragAreaRef} {...moveHandlers}>
-      <Indicator
-        style={{
-          left: (coords?.x ?? 0) + '%',
-          top: (coords?.y ?? 0) + '%',
-        }}
-      />
-    </DragArea>
+    <>
+      <DragArea ref={dragAreaRef} {...moveHandlers}>
+        <Indicator
+          style={{
+            left: (coords?.x ?? 0) + '%',
+            top: (coords?.y ?? 0) + '%',
+          }}
+        />
+      </DragArea>
+      <div>
+        <Label htmlFor='xy-coords-x'>x</Label>
+        <Input
+          inputMode='numeric'
+          value={value.x}
+          onChange={e => onInput(e, 'x')}
+          id='xy-coords-x'
+        />
+      </div>
+      <div>
+        <Label htmlFor='xy-coords-y'>y</Label>
+        <Input
+          inputMode='numeric'
+          value={value.y}
+          onChange={e => onInput(e, 'y')}
+          id='xy-coords-y'
+        />
+      </div>
+    </>
   )
 }
