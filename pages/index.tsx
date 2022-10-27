@@ -26,6 +26,11 @@ const Home: NextPage = () => {
             <a>Color Picker Demo</a>
           </Link>
         </li>
+        <li>
+          <Link href='/generator/box-shadow'>
+            <a>Box Shadow Generator</a>
+          </Link>
+        </li>
       </ul>
     </>
   )
