@@ -1,49 +1,32 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useDragPreventDefault } from '../../../hooks/useDragPreventDefault'
-import { Color } from '../../../types/Color'
 import { IndicatorDragEvent } from '../../../types/Event'
 
-interface HueDragAreaProps {
-  color: Color
-  coords: number
+interface XyInputProps {
+  coords: { x: number; y: number }
   onChange: (e: IndicatorDragEvent) => void
 }
 
 const DragArea = styled.div`
-  --height: 25px;
-  --circle-size: calc(var(--height) * 1.25);
-
-  width: 100%;
-  height: var(--height);
-  background-image: linear-gradient(
-    to right,
-    #ff0000,
-    #ffff00,
-    #00ff00,
-    #00ffff,
-    #0000ff,
-    #ff00ff,
-    #ff0000
-  );
+  width: 150px;
+  height: 150px;
+  background: white;
   border-radius: 4px;
   position: relative;
   cursor: crosshair;
 `
 
 const Indicator = styled.div`
-  width: var(--circle-size);
-  height: var(--circle-size);
-  border: 2px solid #ffffff;
+  width: 15px;
+  height: 15px;
+  border: 2px solid black;
   border-radius: 50%;
-  transform: translate(
-    -50%,
-    calc(var(--height) * 0.5 - var(--circle-size) * 0.5)
-  );
+  transform: translate(-7.5px, -7.5px);
   position: absolute;
 `
 
-export const HueDragArea = ({ color, coords, onChange }: HueDragAreaProps) => {
+export const XyInput = ({ coords, onChange }: XyInputProps) => {
   const [inDrag, setInDrag] = useState(false)
   const dragAreaRef = useRef<HTMLDivElement>(null)
 
@@ -75,8 +58,8 @@ export const HueDragArea = ({ color, coords, onChange }: HueDragAreaProps) => {
     >
       <Indicator
         style={{
-          backgroundColor: color.hex,
-          left: (coords ?? 0) + '%',
+          left: (coords?.x ?? 0) + '%',
+          top: (coords?.y ?? 0) + '%',
         }}
       />
     </DragArea>

@@ -1,4 +1,4 @@
-import { ColorRGBA, Color } from '../types/Color'
+import { ColorRGBA, Color } from '../../../../types/Color'
 import { hexToRgba, rgbaToHsva, rgbaToHex } from './converters'
 
 export const getRgba = (color: string): ColorRGBA => {

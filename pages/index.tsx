@@ -27,6 +27,11 @@ const Home: NextPage = () => {
           </Link>
         </li>
         <li>
+          <Link href='/demo/xyinput'>
+            <a>XyInput Demo</a>
+          </Link>
+        </li>
+        <li>
           <Link href='/generator/box-shadow'>
             <a>Box Shadow Generator</a>
           </Link>

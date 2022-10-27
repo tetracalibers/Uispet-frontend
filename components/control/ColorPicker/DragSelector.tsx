@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { Color } from './types/Color'
+import { Color } from '../../../types/Color'
 import { HueDragArea } from './HueDragArea'
 import { SaturationDragArea } from './SaturationDragArea'
-import { IndicatorDragEvent } from './types/Event'
+import { IndicatorDragEvent } from '../../../types/Event'
 import { OpacityDragArea } from './OpacityDragArea'
 
 interface DragSelectorProps {

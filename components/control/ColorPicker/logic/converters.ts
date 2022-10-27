@@ -1,4 +1,4 @@
-import { ColorHSVA, ColorRGBA } from '../types/Color'
+import { ColorHSVA, ColorRGBA } from '../../../../types/Color'
 
 export const rgbaToHex = (color: ColorRGBA) => {
   const { r, g, b, a } = color

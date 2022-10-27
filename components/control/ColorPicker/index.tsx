@@ -9,7 +9,7 @@ import {
   getMouseTouchPos,
 } from './logic/coordinates'
 import { DragSelector } from './DragSelector'
-import { IndicatorDragEvent } from './types/Event'
+import { IndicatorDragEvent } from '../../../types/Event'
 
 interface ColorPickerProps {
   color: string

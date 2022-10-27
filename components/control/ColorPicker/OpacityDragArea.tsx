@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useDragPreventDefault } from './hooks/useDragPreventDefault'
-import { Color } from './types/Color'
-import { IndicatorDragEvent } from './types/Event'
+import { useDragPreventDefault } from '../../../hooks/useDragPreventDefault'
+import { Color } from '../../../types/Color'
+import { IndicatorDragEvent } from '../../../types/Event'
 
 interface OpacityDragAreaProps {
   color: Color
