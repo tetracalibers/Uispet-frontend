@@ -1,6 +1,7 @@
+import { XyCoords } from './Coords'
+
 export interface Shadow {
-  offsetX: number
-  offsetY: number
+  offset: XyCoords
   blur: number
   spread: number
   color: string

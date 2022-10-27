@@ -3,6 +3,9 @@ import { Shadow } from '../../../types/Shadow'
 import { ColorPicker } from '../../control/ColorPicker'
 import { ChangeEvent, useCallback } from 'react'
 import styled, { css } from 'styled-components'
+import { XyInput } from '../../control/XyInput'
+import { XyCoords } from '../../../types/Coords'
+import { OnOffToggle } from '../../control/OnOffToggle'
 
 interface BoxShadowProps {
   shadow: Shadow
@@ -13,16 +16,21 @@ const Preview = styled.div<{ $shadow: Shadow }>`
   width: 200px;
   height: 200px;
   ${({ $shadow }) => css`
-    box-shadow: ${$shadow.inset && 'inset '}${$shadow.color} ${$shadow.offsetX}px
-      ${$shadow.offsetY}px ${$shadow.blur}px ${$shadow.spread}px;
+    box-shadow: ${$shadow.inset && 'inset '}${$shadow.color} ${$shadow.offset
+        .x}px ${$shadow.offset.y}px ${$shadow.blur}px ${$shadow.spread}px;
   `}
 `
 
 export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
-  const { offsetX, offsetY, blur, spread, color, inset } = shadow
+  const { offset, blur, spread, color, inset } = shadow
 
   const onColorChange = useCallback(
     (color: string) => onChange('color', color),
+    [onChange]
+  )
+
+  const onCoordsChange = useCallback(
+    (coords: XyCoords) => onChange('offset', coords),
     [onChange]
   )
 
@@ -32,23 +40,21 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
     [onChange]
   )
 
+  const onToggle = useCallback(
+    (status: boolean) => onChange('inset', status),
+    [onChange]
+  )
+
   return (
     <>
       <Preview $shadow={shadow} />
       <ColorPicker color={color} onChange={onColorChange} />
-      <RangeInput
-        min={-100}
-        max={100}
-        label='offset-X'
-        value={offsetX}
-        onChange={e => onNumberChange(e, 'offsetX')}
-      />
-      <RangeInput
-        min={-100}
-        max={100}
-        label='offset-Y'
-        value={offsetY}
-        onChange={e => onNumberChange(e, 'offsetY')}
+      <OnOffToggle value={inset} onChange={onToggle} />
+      <XyInput
+        value={offset}
+        onChange={onCoordsChange}
+        max={{ x: 100, y: 100 }}
+        min={{ x: -100, y: -100 }}
       />
       <RangeInput
         min={0}

@@ -12,8 +12,7 @@ type Props = {}
 const BoxShadowGeneratorPage: NextPage<Props> = () => {
   const [boxShadow, setBoxShadow] = useState<Shadow>({
     color: '#00000033',
-    offsetX: 0,
-    offsetY: 60,
+    offset: { x: 0, y: 60 },
     blur: 40,
     spread: -7,
     inset: false,
