@@ -5,11 +5,11 @@ import { parseColor } from './logic/parser'
 import {
   getSaturationCoordinates,
   getHueCoordinates,
-  clamp,
-  getMouseTouchPos,
 } from './logic/coordinates'
 import { DragSelector } from './DragSelector'
 import { IndicatorDragEvent } from '../../../types/Event'
+import { clamp } from '../../../utils/math'
+import { getMouseTouchPos } from '../../../utils/multidevice'
 
 interface ColorPickerProps {
   color: string
