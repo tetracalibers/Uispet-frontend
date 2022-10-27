@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import styled from 'styled-components'
 import { useDragMove } from '../../../hooks/useDragMove'
 import { Color } from '../../../types/Color'
@@ -9,19 +9,12 @@ interface OpacityDragAreaProps {
   onChange: (e: IndicatorDragEvent) => void
 }
 
-const DragArea = styled.div<{ $rgb: string }>`
-  --selected-color: ${({ $rgb }) => `rgba(${$rgb}, 1)`};
-  --transparent: ${({ $rgb }) => `rgba(${$rgb}, 0)`};
+const DragArea = styled.div`
   --height: 25px;
   --circle-size: calc(var(--height) * 1.25);
 
   width: 100%;
   height: var(--height);
-  background-image: linear-gradient(
-    to left,
-    var(--selected-color),
-    var(--transparent)
-  );
   border-radius: 4px;
   position: relative;
   cursor: crosshair;
@@ -43,11 +36,22 @@ export const OpacityDragArea = ({ color, onChange }: OpacityDragAreaProps) => {
   const dragAreaRef = useRef<HTMLDivElement>(null)
   const { moveHandlers } = useDragMove({ ref: dragAreaRef, onChange })
 
+  const rgb = useMemo(() => {
+    const { r, g, b } = color.rgba
+    return `${r}, ${g}, ${b}`
+  }, [color])
+
   return (
     <DragArea
-      $rgb={`${color.rgba.r}, ${color.rgba.g}, ${color.rgba.b}`}
       {...moveHandlers}
       ref={dragAreaRef}
+      style={{
+        backgroundImage: `linear-gradient(
+        to left,
+        rgba(${rgb}, 1),
+        rgba(${rgb}, 0)
+      )`,
+      }}
     >
       <Indicator
         style={{

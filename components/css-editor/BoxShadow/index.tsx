@@ -2,7 +2,7 @@ import { RangeInput } from '../../control/RangeInput'
 import { Shadow } from '../../../types/Shadow'
 import { ColorPicker } from '../../control/ColorPicker'
 import { ChangeEvent, useCallback } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { XyInput } from '../../control/XyInput'
 import { XyCoords } from '../../../types/Coords'
 import { OnOffToggle } from '../../control/OnOffToggle'
@@ -12,13 +12,9 @@ interface BoxShadowProps {
   onChange: <T extends keyof Shadow>(target: T, value: Shadow[T]) => void
 }
 
-const Preview = styled.div<{ $shadow: Shadow }>`
+const Preview = styled.div`
   width: 200px;
   height: 200px;
-  ${({ $shadow }) => css`
-    box-shadow: ${$shadow.inset && 'inset '}${$shadow.color} ${$shadow.offset
-        .x}px ${$shadow.offset.y}px ${$shadow.blur}px ${$shadow.spread}px;
-  `}
 `
 
 export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
@@ -47,7 +43,13 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
 
   return (
     <>
-      <Preview $shadow={shadow} />
+      <Preview
+        style={{
+          boxShadow: `${inset ? 'inset ' : ''}${color} ${offset.x}px ${
+            offset.y
+          }px ${blur}px ${spread}px`,
+        }}
+      />
       <ColorPicker color={color} onChange={onColorChange} />
       <OnOffToggle value={inset} onChange={onToggle} />
       <XyInput
