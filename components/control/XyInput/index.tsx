@@ -4,6 +4,7 @@ import { useDragMove } from '../../../hooks/useDragMove'
 import { XyCoords } from '../../../types/Coords'
 import { IndicatorDragEvent } from '../../../types/Event'
 import { getAreaXyCoords } from '../../../utils/coords'
+import { clamp } from '../../../utils/math'
 
 interface XyInputProps {
   value: XyCoords
@@ -77,19 +78,29 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
 
   const onInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>, target: keyof XyCoords) => {
-      const inputV = Number(e.target.value)
+      const inputNum = Number(e.target.value)
+      const coord = isNaN(inputNum) ? 0 : inputNum / 2
+      const val = isNaN(inputNum) ? 0 : inputNum
       switch (target) {
         case 'x':
-          onChange({ ...value, x: inputV })
+          setCoords(prev => ({
+            ...prev,
+            x: clamp(coord + 50, 0, 100),
+          }))
+          onChange({ ...value, x: clamp(val, min.x, max.x) })
           return
         case 'y':
-          onChange({ ...value, y: inputV })
+          setCoords(prev => ({
+            ...prev,
+            y: clamp(-1 * coord + 50, 0, 100),
+          }))
+          onChange({ ...value, y: clamp(val, min.y, max.y) })
           return
         default:
           return
       }
     },
-    [onChange, value]
+    [onChange, value, min, max]
   )
 
   const onMoveIndicator = useCallback(
@@ -120,8 +131,8 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
       <DragArea ref={dragAreaRef} {...moveHandlers}>
         <Indicator
           style={{
-            left: (coords?.x ?? 0) + '%',
-            top: (coords?.y ?? 0) + '%',
+            left: (coords?.x ?? 50) + '%',
+            top: (coords?.y ?? 50) + '%',
           }}
         />
       </DragArea>
