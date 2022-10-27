@@ -24,10 +24,11 @@ const VerticalStack = styled.div`
 const DragArea = styled.div`
   width: 150px;
   height: 150px;
-  background: white;
+  background: #faf9f7;
   position: relative;
   cursor: crosshair;
-  box-shadow: rgb(0 0 0 / 5%) 0px 6px 24px 0px, rgb(0 0 0 / 8%) 0px 0px 0px 1px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   margin: 1rem auto;
 
   /* y軸 */
@@ -35,7 +36,7 @@ const DragArea = styled.div`
     content: '';
     width: calc(150px / 2);
     height: 150px;
-    border-right: 1px solid black;
+    border-right: 2px solid #cdf0ea;
     display: block;
     transform: translateY(-50%);
   }
@@ -45,17 +46,25 @@ const DragArea = styled.div`
     content: '';
     height: calc(150px / 2);
     width: 150px;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #f6c6ea;
     display: block;
   }
 `
 
 const Indicator = styled.div`
-  width: 15px;
-  height: 15px;
-  border: 2px solid black;
+  --circle-size: 12px;
+
+  width: var(--circle-size);
+  height: var(--circle-size);
+  background: rgb(120, 130, 164, 0.5);
+  box-shadow: rgb(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgb(0 0 0 / 30%) 0px 30px 60px -30px,
+    rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
   border-radius: 50%;
-  transform: translate(-7.5px, -7.5px);
+  transform: translate(
+    calc(var(--circle-size) * -0.5),
+    calc(var(--circle-size) * -0.5)
+  );
   position: absolute;
 `
 
