@@ -32,6 +32,11 @@ const Home: NextPage = () => {
           </Link>
         </li>
         <li>
+          <Link href='/demo/on-off-toggle'>
+            <a>OnOffToggle Demo</a>
+          </Link>
+        </li>
+        <li>
           <Link href='/generator/box-shadow'>
             <a>Box Shadow Generator</a>
           </Link>
