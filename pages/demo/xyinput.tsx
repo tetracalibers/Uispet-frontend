@@ -12,8 +12,8 @@ const XyInputDemoPage: NextPage<Props> = () => {
   const onMove = useCallback((e: IndicatorDragEvent) => {
     const { x, y, width, height } = getAreaXyCoords(e)
     setXy({
-      x: Math.round((x / width) * 100),
-      y: Math.round((y / height) * 100),
+      x: (x / width) * 100,
+      y: (y / height) * 100,
     })
   }, [])
 
