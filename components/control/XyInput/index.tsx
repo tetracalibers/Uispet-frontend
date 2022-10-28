@@ -66,6 +66,7 @@ const Indicator = styled.div`
     calc(var(--circle-size) * -0.5)
   );
   position: absolute;
+  z-index: 2;
 `
 
 const LabelLayout = styled.div`
