@@ -5,7 +5,7 @@ import { XyCoords } from '../../../types/Coords'
 import { IndicatorDragEvent } from '../../../types/Event'
 import { getAreaXyCoords } from '../../../utils/coords'
 import { clamp } from '../../../utils/math'
-import { ResetStyleInput as Input } from '../../reset-style/Input'
+import { ResetStyleInput } from '../../reset-style/Input'
 
 interface XyInputProps {
   value: XyCoords
@@ -23,20 +23,22 @@ const VerticalStack = styled.div`
 `
 
 const DragArea = styled.div`
-  width: 150px;
-  height: 150px;
+  --size: 200px;
+
+  width: var(--size);
+  height: var(--size);
   background: #faf9f7;
   position: relative;
   cursor: crosshair;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-  margin: 1rem auto;
+  margin: 1rem auto 0;
 
   /* y軸 */
   &::after {
     content: '';
-    width: calc(150px / 2);
-    height: 150px;
+    width: calc(var(--size) / 2);
+    height: var(--size);
     border-right: 2px solid #cdf0ea;
     display: block;
     transform: translateY(-50%);
@@ -45,8 +47,8 @@ const DragArea = styled.div`
   /** x軸 */
   &::before {
     content: '';
-    height: calc(150px / 2);
-    width: 150px;
+    height: calc(var(--size) / 2);
+    width: var(--size);
     border-bottom: 2px solid #f6c6ea;
     display: block;
   }
@@ -70,12 +72,16 @@ const Indicator = styled.div`
   z-index: 2;
 `
 
-const LabelLayout = styled.div`
+const InputGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 150px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: end;
+`
+
+const Input = styled(ResetStyleInput)`
+  width: 95px;
 `
 
 const Label = styled.label`
@@ -147,24 +153,26 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
           }}
         />
       </DragArea>
-      <LabelLayout>
-        <Label htmlFor='xy-coords-x'>x</Label>
-        <Input
-          inputMode='numeric'
-          value={value.x}
-          onChange={e => onInput(e, 'x')}
-          id='xy-coords-x'
-        />
-      </LabelLayout>
-      <LabelLayout>
-        <Label htmlFor='xy-coords-y'>y</Label>
-        <Input
-          inputMode='numeric'
-          value={value.y}
-          onChange={e => onInput(e, 'y')}
-          id='xy-coords-y'
-        />
-      </LabelLayout>
+      <InputGroup>
+        <div>
+          <Label htmlFor='xy-coords-x'>x</Label>
+          <Input
+            inputMode='numeric'
+            value={value.x}
+            onChange={e => onInput(e, 'x')}
+            id='xy-coords-x'
+          />
+        </div>
+        <div>
+          <Label htmlFor='xy-coords-y'>y</Label>
+          <Input
+            inputMode='numeric'
+            value={value.y}
+            onChange={e => onInput(e, 'y')}
+            id='xy-coords-y'
+          />
+        </div>
+      </InputGroup>
     </VerticalStack>
   )
 }

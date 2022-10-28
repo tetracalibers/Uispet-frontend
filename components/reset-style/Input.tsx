@@ -33,7 +33,6 @@ const Input = styled.input`
 const EffectWrapper = styled.div`
   position: relative;
   height: 100%;
-  width: 100%;
 
   &::after {
     position: absolute;
