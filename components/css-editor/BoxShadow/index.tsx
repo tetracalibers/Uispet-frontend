@@ -1,11 +1,11 @@
 import { RangeInput } from '../../control/RangeInput'
 import { Shadow } from '../../../types/Shadow'
-import { ColorPicker } from '../../control/ColorPicker'
 import { ChangeEvent, useCallback } from 'react'
 import styled from 'styled-components'
 import { XyInput } from '../../control/XyInput'
 import { XyCoords } from '../../../types/Coords'
 import { OnOffToggle } from '../../control/OnOffToggle'
+import { ColorPickerCompact } from '../../control/ColorPickerCompact'
 
 interface BoxShadowProps {
   shadow: Shadow
@@ -87,7 +87,7 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
           }}
         />
       </PreviewArea>
-      <ColorPicker color={color} onChange={onColorChange} />
+      <ColorPickerCompact color={color} onChange={onColorChange} />
       <XyInput
         value={offset}
         onChange={onCoordsChange}

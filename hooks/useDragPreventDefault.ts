@@ -4,7 +4,11 @@ export const useDragPreventDefault = (ref: RefObject<HTMLElement>) => {
   useEffect(() => {
     const current = ref.current
     if (!current) return
-    const preventDefault = (event: Event) => event.preventDefault()
+    const preventDefault = (e: Event) => {
+      if (e.cancelable) {
+        e.preventDefault()
+      }
+    }
     current.addEventListener('touchstart', preventDefault)
     current.addEventListener('touchmove', preventDefault)
     current.addEventListener('touchend', preventDefault)
