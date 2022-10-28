@@ -21,10 +21,13 @@ const Container = styled.div`
   scrollbar-width: none;
   margin-right: auto;
   width: min(100%, 350px);
-  box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px,
-    rgb(209 213 219) 0px 0px 0px 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
   padding: 1rem;
   border-radius: 4px;
+  background-color: #f9f9f9;
+  position: absolute;
+  z-index: 10;
 
   &::-webkit-scrollbar {
     display: none;
