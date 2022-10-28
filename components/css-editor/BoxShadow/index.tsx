@@ -12,9 +12,44 @@ interface BoxShadowProps {
   onChange: <T extends keyof Shadow>(target: T, value: Shadow[T]) => void
 }
 
-const Preview = styled.div`
+const Container = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 1rem;
+`
+
+const PreviewArea = styled.div`
+  --border-color: #7895b2;
+
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  position: relative;
+  padding: 2rem;
+  border-color: var(--border-color);
+  border-style: double;
+  border-width: 3px 4px 3px 5px;
+  /* ShadowPreviewをレスポンシブ化 */
+  display: flex;
+`
+
+const ShadowPreview = styled.div`
+  max-width: 200px;
   width: 200px;
-  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* 高さを幅に揃える */
+  &::before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
 `
 
 export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
@@ -42,22 +77,24 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
   )
 
   return (
-    <>
-      <Preview
-        style={{
-          boxShadow: `${inset ? 'inset ' : ''}${color} ${offset.x}px ${
-            offset.y
-          }px ${blur}px ${spread}px`,
-        }}
-      />
+    <Container>
+      <PreviewArea>
+        <ShadowPreview
+          style={{
+            boxShadow: `${inset ? 'inset ' : ''}${color} ${offset.x}px ${
+              offset.y
+            }px ${blur}px ${spread}px`,
+          }}
+        />
+      </PreviewArea>
       <ColorPicker color={color} onChange={onColorChange} />
-      <OnOffToggle value={inset} onChange={onToggle} label='inset' />
       <XyInput
         value={offset}
         onChange={onCoordsChange}
         max={{ x: 100, y: 100 }}
         min={{ x: -100, y: -100 }}
       />
+      <OnOffToggle value={inset} onChange={onToggle} label='inset' />
       <RangeInput
         min={0}
         max={100}
@@ -72,6 +109,6 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
         value={spread}
         onChange={e => onNumberChange(e, 'spread')}
       />
-    </>
+    </Container>
   )
 }

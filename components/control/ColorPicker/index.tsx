@@ -16,12 +16,15 @@ interface ColorPickerProps {
 }
 
 const Container = styled.div`
-  padding: 12px;
   overflow: visible;
   scrollbar-width: none;
-  width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  width: min(100%, 350px);
+  box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px,
+    rgb(209 213 219) 0px 0px 0px 1px inset;
+  padding: 1rem;
+  border-radius: 4px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -32,15 +35,20 @@ const InputContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 2px;
   gap: 1rem;
+  flex-wrap: wrap;
 `
 
 const InputGroup = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  grid-gap: 8px;
+  display: flex;
+  gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: end;
+
+  &:last-child {
+    margin-left: auto;
+  }
 `
 
 const ColorPreview = styled.div`
