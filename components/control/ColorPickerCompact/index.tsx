@@ -13,7 +13,6 @@ const Container = styled.div``
 const PreviewButton = styled(ResetStyleButton)`
   --colour-white: #ffffff;
 
-  padding: 0.9rem 1.7rem;
   font-size: 16px;
   transition: all 0.3s ease-in-out;
   border-style: solid;

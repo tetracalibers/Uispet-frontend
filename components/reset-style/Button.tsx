@@ -10,4 +10,5 @@ export const ResetStyleButton = styled.button`
   outline: none;
   padding: 0;
   font-size: 1rem;
+  font-family: inherit;
 `
