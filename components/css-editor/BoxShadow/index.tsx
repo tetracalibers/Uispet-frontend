@@ -93,6 +93,7 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
         onChange={onCoordsChange}
         max={{ x: 100, y: 100 }}
         min={{ x: -100, y: -100 }}
+        label={{ x: 'x (px)', y: 'y (px)' }}
       />
       <OnOffToggle value={inset} onChange={onToggle} label='inset' />
       <RangeInput

@@ -12,6 +12,7 @@ interface XyInputProps {
   onChange: (xy: XyCoords) => void
   max: XyCoords
   min: XyCoords
+  label?: { x: string; y: string }
 }
 
 const VerticalStack = styled.div`
@@ -88,10 +89,13 @@ const Label = styled.label`
   display: block;
 `
 
-export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
+export const XyInput = ({ onChange, max, min, value, label }: XyInputProps) => {
   const dragAreaRef = useRef<HTMLDivElement>(null)
 
-  const [coords, setCoords] = useState({ x: 50, y: 50 })
+  const [coords, setCoords] = useState({
+    x: value.x / 2 + 50,
+    y: -1 * (value.y / 2) + 50,
+  })
 
   const onInput = useCallback(
     (e: ChangeEvent<HTMLInputElement>, target: keyof XyCoords) => {
@@ -155,7 +159,7 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
       </DragArea>
       <InputGroup>
         <div>
-          <Label htmlFor='xy-coords-x'>x</Label>
+          <Label htmlFor='xy-coords-x'>{label?.x ?? 'x'}</Label>
           <Input
             inputMode='numeric'
             value={value.x}
@@ -164,7 +168,7 @@ export const XyInput = ({ onChange, max, min, value }: XyInputProps) => {
           />
         </div>
         <div>
-          <Label htmlFor='xy-coords-y'>y</Label>
+          <Label htmlFor='xy-coords-y'>{label?.y ?? 'y'}</Label>
           <Input
             inputMode='numeric'
             value={value.y}
