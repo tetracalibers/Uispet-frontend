@@ -51,7 +51,7 @@ export const BoxShadow = ({ shadow, onChange }: BoxShadowProps) => {
         }}
       />
       <ColorPicker color={color} onChange={onColorChange} />
-      <OnOffToggle value={inset} onChange={onToggle} />
+      <OnOffToggle value={inset} onChange={onToggle} label='inset' />
       <XyInput
         value={offset}
         onChange={onCoordsChange}

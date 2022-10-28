@@ -19,7 +19,7 @@ const OnOffToggleDemoPage: NextPage<Props> = () => {
 
   return (
     <Centering>
-      <OnOffToggle value={value} onChange={setValue} />
+      <OnOffToggle value={value} onChange={setValue} label='' />
     </Centering>
   )
 }

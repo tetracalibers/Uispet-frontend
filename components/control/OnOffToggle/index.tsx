@@ -3,13 +3,16 @@ import styled from 'styled-components'
 interface OnOffToggleProps {
   value: boolean
   onChange: (value: boolean) => void
+  label: string
 }
 
-const Label = styled.label`
-  --side: 3rem;
-  --duration: 1s;
-  --radius: 10px;
+const Container = styled.div`
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+`
 
+const ToggleState = styled.div`
   cursor: pointer;
   font-size: calc(var(--side) * 0.4);
   width: calc(var(--side) * 2);
@@ -44,6 +47,17 @@ const Label = styled.label`
   }
 `
 
+const Label = styled.label`
+  --side: 3rem;
+  --duration: 1s;
+  --radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+`
+
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   /** VisuallyHidden */
   border: 0;
@@ -56,7 +70,7 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   width: 1px;
 
   /** OFF */
-  & + ${Label} {
+  & + label > ${ToggleState} {
     &::before {
       content: 'OFF';
       background-color: #5eb9cc;
@@ -73,7 +87,7 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   }
 
   /** ON */
-  &:checked + ${Label} {
+  &:checked + label > ${ToggleState} {
     &::before {
       content: 'ON';
       transform: rotateY(-180deg);
@@ -88,17 +102,22 @@ const Checkbox = styled.input.attrs({ type: 'checkbox' })`
   }
 `
 
-export const OnOffToggle = ({ value, onChange }: OnOffToggleProps) => {
+const ToggleTitle = styled.div`
+  line-height: var(--side);
+`
+
+export const OnOffToggle = ({ value, onChange, label }: OnOffToggleProps) => {
   return (
-    <div>
+    <Container>
       <Checkbox
         id='on-off-toggle'
         checked={value}
         onChange={e => onChange(e.target.checked)}
       />
       <Label htmlFor='on-off-toggle'>
-        <div data-checked='On' data-unchecked='Off'></div>
+        <ToggleTitle>{label}</ToggleTitle>
+        <ToggleState />
       </Label>
-    </div>
+    </Container>
   )
 }
