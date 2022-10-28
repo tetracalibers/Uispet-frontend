@@ -5,6 +5,7 @@ import { XyCoords } from '../../../types/Coords'
 import { IndicatorDragEvent } from '../../../types/Event'
 import { getAreaXyCoords } from '../../../utils/coords'
 import { clamp } from '../../../utils/math'
+import { ResetStyleInput as Input } from '../../reset-style/Input'
 
 interface XyInputProps {
   value: XyCoords
@@ -75,13 +76,6 @@ const LabelLayout = styled.div`
   width: 150px;
   margin-left: auto;
   margin-right: auto;
-`
-
-const Input = styled.input`
-  padding: 4px 6px;
-  display: block;
-  text-align: right;
-  width: 80%;
 `
 
 const Label = styled.label`

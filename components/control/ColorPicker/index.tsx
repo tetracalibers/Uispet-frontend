@@ -9,6 +9,7 @@ import {
 import { DragSelector } from './DragSelector'
 import { IndicatorDragEvent } from '../../../types/Event'
 import { getAreaXyCoords } from '../../../utils/coords'
+import { ResetStyleInput as Input } from '../../reset-style/Input'
 
 interface ColorPickerProps {
   color: string
@@ -18,7 +19,6 @@ interface ColorPickerProps {
 const Container = styled.div`
   overflow: visible;
   scrollbar-width: none;
-  margin-left: auto;
   margin-right: auto;
   width: min(100%, 350px);
   box-shadow: rgb(0 0 0 / 5%) 0px 0px 0px 1px,
@@ -58,12 +58,6 @@ const ColorPreview = styled.div`
   width: 25px;
   height: 25px;
   border-radius: 50%;
-`
-
-const Input = styled.input`
-  padding: 4px 6px;
-  display: block;
-  text-align: right;
 `
 
 const Label = styled.label`
