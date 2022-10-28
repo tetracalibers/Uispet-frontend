@@ -19,7 +19,6 @@ const Root = styled.div`
   grid-gap: 8px;
   margin-bottom: 16px;
   max-width: 100%;
-  width: 400px;
 `
 
 export const DragSelector = ({

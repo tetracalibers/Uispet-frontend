@@ -20,6 +20,8 @@ const Container = styled.div`
   overflow: visible;
   scrollbar-width: none;
   width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 
   &::-webkit-scrollbar {
     display: none;
@@ -31,6 +33,7 @@ const InputContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 2px;
+  gap: 1rem;
 `
 
 const InputGroup = styled.div`
